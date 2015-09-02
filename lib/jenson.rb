@@ -4,7 +4,18 @@ require 'fileutils'
 require 'jenson/generator.rb'
 require 'jenson/model.rb'
 
+class Command
+  def generate()
+    raise 'Abstract method called'
+  end
+  def destroy()
+    raise 'Abstract method called'
+  end
+end
+
 class Jenson
+
+  # Every combination needs to be reversible
 
   attr_accessor :model
   attr_accessor :generator
@@ -23,7 +34,15 @@ class Jenson
     @generator.execute(@model)
   end
 
+  def destroy()
+  end
+
 end
 
-j = Jenson.new('model', 'User', ['first:string', 'last:string'])
-j.generate
+# jenson g model User first:string last:string -o models -l java
+# jenson d model User first:string last:string -o models -l ruby
+
+# jenson g pattern strategy Login -o models -l ruby
+# jenson g pattern strategy Login -o com/package/models -l java
+
+# jenson g test User 

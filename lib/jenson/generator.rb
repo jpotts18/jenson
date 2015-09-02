@@ -8,14 +8,21 @@ class GeneratorFactory
   end
 end
 
-class Command
-  def execute(model)
+class Strategy
+  def render()
+    raise 'Abstract method called'
   end
 end
 
-class ModelGenerator < Command
+class PatternRenderer < Strategy
+  def render()
+    @output = File.read('../teml')  
+  end
+end
 
-  def execute(model)
+class ModelRenderer < Strategy
+
+  def render()
     @model = model
     f = File.expand_path(File.join(File.dirname(__FILE__), '../templates/model.rb.erb'))
     @template = File.read(f)
