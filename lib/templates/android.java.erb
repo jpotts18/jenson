@@ -1,0 +1,34 @@
+@Table(name = "ElevateGroup")
+public class Group extends Model implements Parcelable {
+    @Column (name = "name") public String name;
+    @Column (name = "company_id") public String companyId;
+
+    public Group() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.companyId);
+    }
+
+    protected Group(Parcel in) {
+        this.name = in.readString();
+        this.companyId = in.readString();
+    }
+
+    public static final Creator<Group> CREATOR = new Creator<Group>() {
+        public Group createFromParcel(Parcel source) {
+            return new Group(source);
+        }
+
+        public Group[] newArray(int size) {
+            return new Group[size];
+        }
+    };
+}

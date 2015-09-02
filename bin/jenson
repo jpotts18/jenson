@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+require 'jenson'
+require 'optparse'
+options = {}
+
+opt_parser = OptionParser.new do |opt|  
+  opt.banner = "Usage: jenson model User first_name:string -l ruby"
+  opt.separator  ""
+  opt.separator  "Commands"
+  opt.separator  "     name: the name the sherpa should use when addressing you"
+  opt.separator  ""
+  opt.separator  "Options"
+
+  opt.on("-h","--help","help") do
+    puts opt_parser
+  end
+end
+
+opt_parser.parse!  
+
+# Parse args
+generator = ARGV.shift.downcase
+class_name = ARGV.shift.capitalize
+fields = []
+ARGV.each {|arg| fields << arg }
+
+case generator
+when 'model'
+  puts "Generating #{generator} : #{class_name}"
+  Jenson.new(generator, class_name, fields)
+
+when 'controller'
+  puts "Generating #{generator} : #{class_name}"
+else  
+  puts opt_parser
+end  
